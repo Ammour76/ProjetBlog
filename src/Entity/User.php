@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -38,9 +40,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private $created_at;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Jeux::class)]
+    private Collection $jeuxes;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commentaires::class)]
+    private Collection $commentaires;
+
     public function __construct()
     {
-        $this->created_at = new \DateTimeImmutable();  
+        $this->created_at = new \DateTimeImmutable();
+        $this->jeuxes = new ArrayCollection();
+        $this->commentaires = new ArrayCollection();  
 
     }
     
@@ -146,6 +156,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Jeux>
+     */
+    public function getJeuxes(): Collection
+    {
+        return $this->jeuxes;
+    }
+
+    public function addJeux(Jeux $jeux): self
+    {
+        if (!$this->jeuxes->contains($jeux)) {
+            $this->jeuxes->add($jeux);
+            $jeux->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeJeux(Jeux $jeux): self
+    {
+        if ($this->jeuxes->removeElement($jeux)) {
+            // set the owning side to null (unless already changed)
+            if ($jeux->getUser() === $this) {
+                $jeux->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaires>
+     */
+    public function getCommentaires(): Collection
+    {
+        return $this->commentaires;
+    }
+
+    public function addCommentaire(Commentaires $commentaire): self
+    {
+        if (!$this->commentaires->contains($commentaire)) {
+            $this->commentaires->add($commentaire);
+            $commentaire->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaires $commentaire): self
+    {
+        if ($this->commentaires->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getUser() === $this) {
+                $commentaire->setUser(null);
+            }
+        }
 
         return $this;
     }
