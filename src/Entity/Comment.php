@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentairesRepository;
+use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CommentairesRepository::class)]
-class Commentaires
+#[ORM\Entity(repositoryClass: CommentRepository::class)]
+class Comment
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -15,16 +15,16 @@ class Commentaires
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Contenu = null;
+    private ?string $content = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $Created_at = null;
+    private ?\DateTimeImmutable $createdAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Jeux $jeux = null;
+    private ?Jeu $jeu = null;
 
-    #[ORM\ManyToOne(inversedBy: 'commentaires')]
+    #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
@@ -33,38 +33,38 @@ class Commentaires
         return $this->id;
     }
 
-    public function getContenu(): ?string
+    public function getContent(): ?string
     {
-        return $this->Contenu;
+        return $this->content;
     }
 
-    public function setContenu(string $Contenu): self
+    public function setContent(string $content): self
     {
-        $this->Contenu = $Contenu;
+        $this->content = $content;
 
         return $this;
     }
 
     public function getCreatedAt(): ?\DateTimeImmutable
     {
-        return $this->Created_at;
+        return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $Created_at): self
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
-        $this->Created_at = $Created_at;
+        $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getJeux(): ?Jeux
+    public function getJeu(): ?Jeu
     {
-        return $this->jeux;
+        return $this->jeu;
     }
 
-    public function setJeux(?Jeux $jeux): self
+    public function setJeu(?Jeu $jeu): self
     {
-        $this->jeux = $jeux;
+        $this->jeu = $jeu;
 
         return $this;
     }

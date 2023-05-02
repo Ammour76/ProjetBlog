@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Commentaires;
+use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Commentaires>
+ * @extends ServiceEntityRepository<Category>
  *
- * @method Commentaires|null find($id, $lockMode = null, $lockVersion = null)
- * @method Commentaires|null findOneBy(array $criteria, array $orderBy = null)
- * @method Commentaires[]    findAll()
- * @method Commentaires[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Category|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Category|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Category[]    findAll()
+ * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CommentairesRepository extends ServiceEntityRepository
+class CategoryRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Commentaires::class);
+        parent::__construct($registry, Category::class);
     }
 
-    public function save(Commentaires $entity, bool $flush = false): void
+    public function save(Category $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class CommentairesRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Commentaires $entity, bool $flush = false): void
+    public function remove(Category $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class CommentairesRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Commentaires[] Returns an array of Commentaires objects
+//     * @return Category[] Returns an array of Category objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class CommentairesRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Commentaires
+//    public function findOneBySomeField($value): ?Category
 //    {
 //        return $this->createQueryBuilder('c')
 //            ->andWhere('c.exampleField = :val')

@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Jeux;
+use App\Entity\Jeu;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Jeux>
+ * @extends ServiceEntityRepository<Jeu>
  *
- * @method Jeux|null find($id, $lockMode = null, $lockVersion = null)
- * @method Jeux|null findOneBy(array $criteria, array $orderBy = null)
- * @method Jeux[]    findAll()
- * @method Jeux[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Jeu|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Jeu|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Jeu[]    findAll()
+ * @method Jeu[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class JeuxRepository extends ServiceEntityRepository
+class JeuRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Jeux::class);
+        parent::__construct($registry, Jeu::class);
     }
 
-    public function save(Jeux $entity, bool $flush = false): void
+    public function save(Jeu $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class JeuxRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Jeux $entity, bool $flush = false): void
+    public function remove(Jeu $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class JeuxRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Jeux[] Returns an array of Jeux objects
+//     * @return Jeu[] Returns an array of Jeu objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class JeuxRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Jeux
+//    public function findOneBySomeField($value): ?Jeu
 //    {
 //        return $this->createQueryBuilder('j')
 //            ->andWhere('j.exampleField = :val')

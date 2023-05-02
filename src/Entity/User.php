@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+// use Doctrine\Common\Collections\ArrayCollection;
+// use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -40,17 +42,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', options: ['default' => 'CURRENT_TIMESTAMP'])]
     private $created_at;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Jeux::class)]
-    private Collection $jeuxes;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Jeu::class)]
+    private Collection $jeus;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commentaires::class)]
-    private Collection $commentaires;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
+    private Collection $comments;
+
+    // #[ORM\OneToMany(mappedBy: 'user', targetEntity: Jeux::class)]
+    // private Collection $jeuxes;
+
+    // #[ORM\OneToMany(mappedBy: 'user', targetEntity: Commentaires::class)]
+    // private Collection $commentaires;
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
-        $this->jeuxes = new ArrayCollection();
-        $this->commentaires = new ArrayCollection();  
+        // $this->jeuxes = new ArrayCollection();
+        // $this->commentaires = new ArrayCollection();  
+        $this->jeus = new ArrayCollection();
+        $this->comments = new ArrayCollection();
 
     }
     
@@ -160,30 +170,94 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    // /**
+    //  * @return Collection<int, Jeux>
+    //  */
+    // public function getJeuxes(): Collection
+    // {
+    //     return $this->jeuxes;
+    // }
+
+    // public function addJeux(Jeux $jeux): self
+    // {
+    //     if (!$this->jeuxes->contains($jeux)) {
+    //         $this->jeuxes->add($jeux);
+    //         $jeux->setUser($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeJeux(Jeux $jeux): self
+    // {
+    //     if ($this->jeuxes->removeElement($jeux)) {
+    //         set the owning side to null (unless already changed)
+    //         if ($jeux->getUser() === $this) {
+    //             $jeux->setUser(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    // /**
+    //  * @return Collection<int, Commentaires>
+    //  */
+    // public function getCommentaires(): Collection
+    // {
+    //     return $this->commentaires;
+    // }
+
+    // public function addCommentaire(Commentaires $commentaire): self
+    // {
+    //     if (!$this->commentaires->contains($commentaire)) {
+    //         $this->commentaires->add($commentaire);
+    //         $commentaire->setUser($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeCommentaire(Commentaires $commentaire): self
+    // {
+    //     if ($this->commentaires->removeElement($commentaire)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($commentaire->getUser() === $this) {
+    //             $commentaire->setUser(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function __toString (){
+    //     return $this->email;
+    // }
+
     /**
-     * @return Collection<int, Jeux>
+     * @return Collection<int, Jeu>
      */
-    public function getJeuxes(): Collection
+    public function getJeus(): Collection
     {
-        return $this->jeuxes;
+        return $this->jeus;
     }
 
-    public function addJeux(Jeux $jeux): self
+    public function addJeu(Jeu $jeu): self
     {
-        if (!$this->jeuxes->contains($jeux)) {
-            $this->jeuxes->add($jeux);
-            $jeux->setUser($this);
+        if (!$this->jeus->contains($jeu)) {
+            $this->jeus->add($jeu);
+            $jeu->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeJeux(Jeux $jeux): self
+    public function removeJeu(Jeu $jeu): self
     {
-        if ($this->jeuxes->removeElement($jeux)) {
+        if ($this->jeus->removeElement($jeu)) {
             // set the owning side to null (unless already changed)
-            if ($jeux->getUser() === $this) {
-                $jeux->setUser(null);
+            if ($jeu->getUser() === $this) {
+                $jeu->setUser(null);
             }
         }
 
@@ -191,32 +265,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Commentaires>
+     * @return Collection<int, Comment>
      */
-    public function getCommentaires(): Collection
+    public function getComments(): Collection
     {
-        return $this->commentaires;
+        return $this->comments;
     }
 
-    public function addCommentaire(Commentaires $commentaire): self
+    public function addComment(Comment $comment): self
     {
-        if (!$this->commentaires->contains($commentaire)) {
-            $this->commentaires->add($commentaire);
-            $commentaire->setUser($this);
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setUser($this);
         }
 
         return $this;
     }
 
-    public function removeCommentaire(Commentaires $commentaire): self
+    public function removeComment(Comment $comment): self
     {
-        if ($this->commentaires->removeElement($commentaire)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($commentaire->getUser() === $this) {
-                $commentaire->setUser(null);
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
             }
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 }
