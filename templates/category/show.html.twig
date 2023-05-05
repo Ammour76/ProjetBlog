@@ -22,10 +22,10 @@
     <div>
    
     {% for jeu in jeus %}
-    
+    {{ dump(jeu) }}
     <div> Jeu {{jeu.titre}}</div>
     {% endfor %}
-      </div>
+    </div>
     {# <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a> #}
 
     {# {{ include('category/_delete_form.html.twig') }} #}

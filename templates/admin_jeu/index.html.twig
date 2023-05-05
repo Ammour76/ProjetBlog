@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Jeu index{% endblock %}
+{% block title %}Jeux{% endblock %}
 
 {% block body %}
     <h1>Jeu index</h1>
@@ -20,7 +20,7 @@
             <tr>
                 <td>{{ jeu.id }}</td>
                 <td>{{ jeu.titre }}</td>
-                <td>{{ jeu.photo }}</td>
+               <td><img src="{{ jeu.photo }}" height ="100" width = "100" ></td>
                 <td>{{ jeu.description }}</td>
                 <td>
                     <a href="{{ path('app_admin_jeu_show', {'id': jeu.id}) }}">show</a>
